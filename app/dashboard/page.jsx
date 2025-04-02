@@ -16,6 +16,8 @@ const DashboardPage = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  // 클릭된 날짜와 시간을 저장
+  const [lastFetchedTime, setLastFetchedTime] = useState(null);
 
   const fetchData = async (page = 1) => {
     try {
@@ -28,6 +30,9 @@ const DashboardPage = () => {
       setTotalPages(result.totalPages);
       setError(null);
       setCurrentPage(page);
+      // 현재 날짜와 시간을 추가
+      const now = new Date();
+      setLastFetchedTime(now.toLocaleString()); // 설정된 형식으로 날짜와 시간을 저장
     } catch (err) {
       console.error("Failed to fetch data:", err);
       setError("Failed to fetch data");
@@ -37,7 +42,7 @@ const DashboardPage = () => {
   // 컴포넌트가 마운트될 때 처음 데이터를 가져옵니다.
   React.useEffect(() => {
     fetchData(currentPage);
-  }, []);
+  }, [currentPage]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -54,6 +59,7 @@ const DashboardPage = () => {
     <div>
       <div className="flex items-center justify-center bg-pink-500  h-8 py-4">
         Simulation Result Data
+        {lastFetchedTime && <span className="ml-4">({lastFetchedTime})</span>}
       </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <table
@@ -125,10 +131,14 @@ const DashboardPage = () => {
       </Pagination>
 
       <div className="grid grid-cols-4 gap-4 m-20">
-        <Button variant="special" size="special">
+        <Button
+          variant="special"
+          size="special"
+          onClick={() => fetchData(currentPage)}>
           {" "}
           데이터 가져오기{" "}
         </Button>
+
         <Button variant="special" size="special">
           {" "}
           AI모델 학습하기{" "}

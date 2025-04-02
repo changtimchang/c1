@@ -43,17 +43,17 @@ const Home = () => {
   };
   return (
     <div>
-      <h1>PostgreSQL Data</h1>
+      <div className='flex items-center justify-center bg-pink-500  h-8 py-4'>Simulation Result Data</div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      <Button onClick={fetchData}>Fetch Data</Button>
+      {/* <Button onClick={fetchData}>Fetch Data</Button> */}
       <table style={{ marginTop: '20px', border: '1px solid black', width: '100%' }}>
-        <thead>
+        <thead style={{ marginTop: '20px', border: '1px solid black', width: '100%' }}>
           <tr>
             <th>id</th>
             <th>Temp</th>
             <th>v1</th>
             <th>v2</th>
-            <th>porosity</th>
+            <th>porotiy</th>
             <th>soltime</th>
             <th>coldshut</th>
             <th>filltime</th>
@@ -63,14 +63,14 @@ const Home = () => {
             {/* 테이블의 다른 열을 추가합니다. */}
           </tr>
         </thead>
-        <tbody>
+        <tbody className='text-center'>
           {data.map(item => (
             <tr key={item.id} className='gap-2'>
               <td>{item.id}</td>
               <td>{item.Temp}</td>
               <td>{item.v1}</td>
               <td>{item.v2}</td>
-              <td>{item.porosity}</td>
+              <td>{item.porotiy}</td>
               <td>{item.soltime}</td>
               <td>{item.coldshut}</td>
               <td>{item.filltime}</td>
